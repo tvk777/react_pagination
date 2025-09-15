@@ -12,15 +12,11 @@ export const App: React.FC = () => {
   const [perPage, setPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const onPageChange = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    page: number,
-  ) => {
+  const onPageChange = (page: number) => {
     if (page === currentPage) {
       return;
     }
 
-    event.preventDefault();
     setCurrentPage(page);
   };
 

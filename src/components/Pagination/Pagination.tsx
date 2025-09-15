@@ -6,10 +6,7 @@ type Props = {
   total: number;
   perPage: number;
   currentPage?: number;
-  onPageChange: (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    page: number,
-  ) => void;
+  onPageChange: (page: number) => void;
 };
 
 export const Pagination: React.FC<Props> = ({
@@ -22,7 +19,7 @@ export const Pagination: React.FC<Props> = ({
   const pages = getNumbers(1, countPages);
 
   if (countPages < 1) {
-    return;
+    return null;
   }
 
   return (
@@ -33,12 +30,12 @@ export const Pagination: React.FC<Props> = ({
           className="page-link"
           href="#prev"
           aria-disabled={currentPage === 1}
-          onClick={e => {
+          onClick={() => {
             if (currentPage === 1) {
               return;
             }
 
-            onPageChange(e, currentPage - 1);
+            onPageChange(currentPage - 1);
           }}
         >
           «
@@ -54,9 +51,9 @@ export const Pagination: React.FC<Props> = ({
             data-cy="pageLink"
             className="page-link"
             href={`#${page}`}
-            onClick={e => {
+            onClick={() => {
               if (page !== currentPage) {
-                onPageChange(e, page);
+                onPageChange(page);
               }
             }}
           >
@@ -71,12 +68,12 @@ export const Pagination: React.FC<Props> = ({
           className="page-link"
           href="#next"
           aria-disabled={currentPage === countPages}
-          onClick={e => {
+          onClick={() => {
             if (currentPage === countPages) {
               return;
             }
 
-            onPageChange(e, currentPage + 1);
+            onPageChange(currentPage + 1);
           }}
         >
           »
