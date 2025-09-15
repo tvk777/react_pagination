@@ -5,7 +5,7 @@ import { getNumbers } from '../../utils';
 type Props = {
   total: number;
   perPage: number;
-  currentPage: number;
+  currentPage?: number;
   onPageChange: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     page: number,
@@ -15,11 +15,15 @@ type Props = {
 export const Pagination: React.FC<Props> = ({
   total,
   perPage,
-  currentPage,
+  currentPage = 1,
   onPageChange,
 }) => {
-  const countPages = Math.ceil(total / perPage);
+  const countPages = perPage > 0 ? Math.ceil(total / perPage) : 0;
   const pages = getNumbers(1, countPages);
+
+  if (countPages < 1) {
+    return;
+  }
 
   return (
     <ul className="pagination">
@@ -50,7 +54,11 @@ export const Pagination: React.FC<Props> = ({
             data-cy="pageLink"
             className="page-link"
             href={`#${page}`}
-            onClick={e => onPageChange(e, page)}
+            onClick={e => {
+              if (page !== currentPage) {
+                onPageChange(e, page);
+              }
+            }}
           >
             {page}
           </a>
